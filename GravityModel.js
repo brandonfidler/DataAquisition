@@ -60,11 +60,11 @@ function saveFormAsTextFile() {
 // Based on https://thiscouldbebetter.wordpress.com/2012/12/18/loading-editing-and-saving-a-text-file-in-html5-using-javascrip/
     var i;
     var textToSave;
-    textToSave = "Station(M)" +"\t"+"Time(min)"+"\t"+"Gravity(mgal)"+"\r\n"+"\r\n";
+    textToSave = "Station(M)" +','+"Time(min)"+','+"Gravity(mgal)"+"\r\n"+"\r\n";
     for (i = 0; i < ndata-1; i++){
-        textToSave += parseInt(location[i]) + "\t\t" + parseInt(obtime[i]) +"\t\t" + parseFloat(gravity[i]).toPrecision(4) +"\r\n";
+        textToSave += parseInt(location[i])+ ',' + parseInt(obtime[i])+ ',' + parseFloat(gravity[i]).toPrecision(4) +"\r\n";
     }
-    var textToSaveAsBlob = new Blob([textToSave], {type: "text/plain"});
+    var textToSaveAsBlob = new Blob([textToSave], {type: "text/csv"}); //change csv to text if wanting text file
     var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
     var fileNameToSaveAs = 'Grav_Data';
 
@@ -78,6 +78,7 @@ function saveFormAsTextFile() {
 
     downloadLink.click();
 }
+
 
 function destroyClickedElement(event)
 {
