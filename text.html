@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gravity Data Acquisition</title>
+	<link rel="stylesheet" href="appletFormat.css">
+</head>
+<body>
+
+<div id="page">
+
+	<h1>Gravity Data Acquisition</h1>
+	<form action="">
+<br>
+		<div class="form-row">
+	<label for="loc"> Line Location (m): </label> <!-- =title - input example -->
+		<input  step="any" name="loc"  aria-required="true" data-ok="false" type="number" id="loc"  size="40" placeholder="Enter Value: (m)">
+			<span class="error-msg" id="locErr"></span>
+		</div>
+	<br>
+
+		<div class="form-row">
+	<label for="spacing"> Station Spacing (m): </label><!-- =location - input example -->
+		<input  step="any" name="spacing"  aria-required="true" data-ok="false"type="number" id="spacing"  size="40" placeholder="Enter Value: (m)">
+			<span class="error-msg" id="spacingErr"></span>
+		</div>
+	<br>
+
+			<div class="form-row">
+	<label for="nread"> Measurements per Station: </label><!-- =location - input example -->
+		<input step="any"  name="nread"  aria-required="true" data-ok="false" type="number" id="nread"  size="40" placeholder="Enter Value:">
+				<span class="error-msg" id="nreadErr"></span>
+			</div>
+	<br>
+
+				<div class="form-row">
+	<label for="base"> Base Station Location (m): </label><!-- =location - input example -->
+		<input step="any" name="base"  aria-required="true" data-ok="false" type="number" id="base"  size="40" placeholder="Enter Value: (m)">
+					<span class="error-msg" id="baseErr"></span>
+				</div>
+	<br>
+
+					<div class="form-row">
+	<label for="bfreq">Return to base Station every:</label> <!-- =location - input example -->
+		<input step="any" name="bfreq"  aria-required="true" data-ok="false" type="number" id="bfreq" size="40" placeholder="Enter Value: (minutes)">
+						<span class="error-msg" id="bfreqErr"></span>
+					</div>
+	<br> <br>
+
+	<!--<div style="text-align: right;">-->
+		<!--<span style="color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-weight: inherit;">-->
+			<!--<button type="button" onclick="saveFormAsTextFile()">Retrieve Data Set</button>-->
+		<!--</span></div>-->
+		<div style="text-align: right;">
+		<label for="filename">
+		</label>
+			<span style="color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-weight: inherit;">
+		<button  onclick="saveFormAsTextFile()" id="filename" aria-disabled="true" aria-describedby="locErr spacingErr nreadErr baseErr bfreqErr">
+			Retrieve Data Set
+		</button>
+</span></div>
+	</form>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="GravityModel.js"></script>
+<script type="text/javascript" src="DataACQ.js"></script>
+
+
+</body>
+</html>

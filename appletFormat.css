@@ -1,0 +1,133 @@
+body {
+    font-family:verdana, sans-serif;
+    color:#000000;
+    background:#fafafa;
+    padding:20px;
+    text-align:center;
+}
+
+#page {
+    text-align:left;
+    max-width:660px;
+    margin:0 auto;
+}
+
+h1 {
+    font-size:18px;
+    font-weight: bold;
+    text-align:center
+}
+
+label {
+    font-size:16px;
+}
+
+label i {
+    font-style:normal;
+    display:inline;
+    text-align:right;
+    width:100px;
+}
+
+label textarea {
+    vertical-align:top;
+}
+
+button {
+    margin-left:105px;
+    padding:5px;
+    margin-top:5px;
+    font-size:16px;
+}
+
+input, textarea {
+    width:400px;
+    font-size:16px;
+    font-family: courier, "courier new", monospace;
+    margin:0 0 5px 0;
+    padding:5px;
+    border:1px solid #eee;
+}
+
+select {
+    margin:0 0 5px 0;
+}
+
+@media (min-width:300px) and (max-width: 768px) {
+    input, textarea {width:100%;}
+    label i {display:block; width:auto; text-align:left;}
+    button {display:block; margin:0;}
+}
+.error-list {
+    border: 1px solid red;
+    padding: 10px 15px 10px 30px;
+}
+.error-msg {
+    color: #cc0000;
+    display: block;
+    margin-left: 9em;
+}
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+    border: 1px solid red;
+}
+button:disabled,
+button:disabled:hover,
+button[aria-disabled="true"],
+button[aria-disabled="true"]:hover {
+    color: #fafafa;
+    background-color: #fafafa;
+    border: #fafafa;
+    padding: 0px;
+
+}
+input:disabled,
+select:disabled,
+textarea:disabled {
+    background-color: #ffffff;
+}
+
+.img-replacement label {
+    position: relative;
+    padding-left: 24px;
+}
+.img-replacement [type="radio"] {
+    position: absolute;
+    left: 3px;
+    top: 1px;
+}
+.img-replacement [type="checkbox"] {
+    position: absolute;
+    left: 3px;
+    top: 1px;
+}
+.svg-radio,
+.svg-checkbox {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -10px;
+}
+.svg-radio .stroke,
+.svg-checkbox .stroke {
+    stroke: #767676;
+    fill: #fff;
+}
+.svg-radio .center,
+.svg-checkbox .center {
+    fill: transparent;
+}
+.img-replacement :focus + .svg-radio,
+.img-replacement :focus + .svg-checkbox {
+    box-shadow: inset 0px 0px 2px 2px #3279bf;
+}
+.img-replacement :focus + .svg-radio .stroke,
+.img-replacement :focus + .svg-checkbox .stroke {
+    stroke: #3279bf;
+}
+:checked + .svg-radio .center,
+:checked + .svg-checkbox .center {
+    fill: #678e19;
+}
