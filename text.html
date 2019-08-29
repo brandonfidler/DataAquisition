@@ -16,7 +16,7 @@
 <br>
 		<div class="form-row">
 	<label for="loc"> Line Location (m): </label> <!-- =title - input example -->
-		<input  step="any" name="loc"  aria-required="true" data-ok="false" type="number" id="loc"  size="40" placeholder="Enter Value: (m)">
+		<input  step="any" name="loc"  aria-required="true" data-ok="false" value="" type="number" id="loc"  size="40" placeholder="Enter Value: (m)">
 			<span class="error-msg" id="locErr"></span>
 		</div>
 	<br>
@@ -51,13 +51,13 @@
 
 	<!--<div style="text-align: right;">-->
 		<!--<span style="color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-weight: inherit;">-->
-			<!--<button type="button" onclick="saveFormAsTextFile()">Retrieve Data Set</button>-->
+			<!--<button type="button" onclick="saveFormAsTextFile()">Retrieve Data Set</button>   aria-describedby="locErr spacingErr nreadErr baseErr bfreqErr"-->
 		<!--</span></div>-->
 		<div style="text-align: right;">
 		<label for="filename">
 		</label>
 			<span style="color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-weight: inherit;">
-		<button  onclick="saveFormAsTextFile()" id="filename" aria-disabled="true" aria-describedby="locErr spacingErr nreadErr baseErr bfreqErr">
+		<button  onclick="saveFormAsTextFile();" id="filename" aria-disabled="true" aria-describedby="locErr spacingErr nreadErr baseErr bfreqErr" >
 			Retrieve Data Set
 		</button>
 </span></div>
