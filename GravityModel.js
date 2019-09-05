@@ -110,7 +110,7 @@
 // Maximum time survey crew will work before taking a break
     let mistie = 0.005;
 // Probability of crew generating a mistie
-
+    let rand;
 //Arrays to hold station location and gravity value
     let gravity;
     let obtime;
@@ -152,8 +152,14 @@
         //Determine how many readings we will make
         ndata = setNdata(dx, bfreq, nread);
 
+        //Initialize Random number generator
+        seed = parseInt(dx * bloc * yloc) / bfreq;
+        if (seed > 30000) {
+            seed = parseInt(30000 / (dx + yloc));
+        }
+        rand = Math.random() * seed;
 
-        //Define array bounds //WORK FROM HEREREASDFASDFSDFASDASDGASG
+        //Define array bounds
         location = new Array(ndata);
         gravity = new Array(ndata);
         obtime = new Array(ndata);
@@ -204,7 +210,8 @@
         mtsize = 0.0;
         // Size of mistie
 
-
+        let min = 99;
+        let max =101;
         /*
          *  Compute time needed to complete each gravity station and base station
          *  nominally these are 5 and 15 minutes respectively. This assumes 3 readings
@@ -223,7 +230,7 @@
 
         for (station = xmin; station <= xmax; station += dx) {
 
-            if (gaussianRand() < mistie) { //Took our the .next() could be an error later on
+            if (Math.floor(rand * (max - min)) + min < mistie) { //Took our the .next() could be an error later on
                 mtsize += gaussianRand() * std;
             }
 
@@ -415,7 +422,6 @@
         let btime;
         let rtime;
         let dtime;
-        let seed;
         let time_sta;
         let time_base;
 
@@ -522,6 +528,16 @@
             rad = x1 * x1 + x2 * x2;
         } while (rad >= 1 || rad === 0);
         let c = Math.sqrt(-2 * Math.log(rad) / rad);
-        return (x1 * c);
+        return (x2 * c);
     }
 
+function random() {
+        let seed;
+    //Initialize Random number generator
+    seed = parseInt(getDx() * getBloc() * getYloc()) / getBfreq();
+    if (seed > 30000) {
+        seed = parseInt(30000 / (getDx() + getYloc()));
+    }
+    rand = Math.random() * seed;
+    return(rand);
+}
