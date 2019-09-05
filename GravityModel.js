@@ -114,11 +114,12 @@
 //Arrays to hold station location and gravity value
     let gravity;
     let obtime;
+
 //Array to hold time at which reading was made
     let ndata;
 
 
-    function GravityModel(dx, bloc, bfreq, nread, yloc) {
+    function GravityModel(dx, bloc, bfreq, nread, yloc) { //parameters being read in from saveFormasText function
 
         let tradius;
         let tdrho;
@@ -148,19 +149,14 @@
         let time_base;
         let i;
 
+        //Determine how many readings we will make
         ndata = setNdata(dx, bfreq, nread);
 
-        seed = parseInt(dx * bloc * yloc) / bfreq;
-
-        if (seed > 30000) {
-            seed = (30000 / (dx + yloc));
-        }
-        let rand = gaussianRand() * seed; //ASK JASON ABOUT THIS, IF IT SHOULD BE GAUSIANRAND
 
         //Define array bounds //WORK FROM HEREREASDFASDFSDFASDASDGASG
-        location = [ndata];
-        gravity = [ndata];
-        obtime = [ndata];
+        location = new Array(ndata);
+        gravity = new Array(ndata);
+        obtime = new Array(ndata);
 
         // set geologic parameters
         // These are the parameters for the tunnel at y=0
@@ -206,9 +202,18 @@
         dtime = 0;
         // Time since start of day
         mtsize = 0.0;
-        //
+        // Size of mistie
 
-        time_sta = parseInt((nread * 5 / 3));
+
+        /*
+         *  Compute time needed to complete each gravity station and base station
+         *  nominally these are 5 and 15 minutes respectively. This assumes 3 readings
+         *  at each gravity station, and the base station takes 3 times as long as the
+         *  gravity stations to complete. If more are requested, change
+         *  these time estimates accordingly
+         */
+
+        time_sta = parseInt(nread * 5 / 3);
         if (time_sta < 5) {
             time_sta = 5;
         }
@@ -218,7 +223,7 @@
 
         for (station = xmin; station <= xmax; station += dx) {
 
-            if (rand < mistie) { //Took our the .next() could be an error later on
+            if (gaussianRand() < mistie) { //Took our the .next() could be an error later on
                 mtsize += gaussianRand() * std;
             }
 
@@ -231,9 +236,10 @@
                 grav = cyl(tradius, tdrho, tdepth,
                     tposition, bloc, yloc,
                     trend) + tides(time) + regional(bloc, yloc) +
-                    (gaussianRand() * std / Math.sqrt(nread)) + slab(swidth,
+                    gaussianRand() * std / Math.sqrt(nread) + slab(swidth,
                         sdrho, stop, sbot, sposition, bloc, yloc, trend) +
                     vcyl(cxloc, cyloc, cradius, ctop, cdrho, bloc, yloc) + mtsize;
+
                 gravity[i] = grav;
                 location[i] = bloc;
                 obtime[i] = time;
@@ -244,8 +250,17 @@
                 dtime += time_base;
                 btime = time_base;
 
+                // Now that we have a base station reading check to see if the
+                // crew is going to take a break or finish for the day
+
                 if (rtime >= tbreak || dtime >= tdaily) {
+                    /*
+                     *  crew will take a break and reoccupy base after break
+                     */
                     if (dtime >= tdaily) {
+                        /*
+                        *  this break is the end of day also
+                        */
                         time += 720;
                         rtime = 0;
                         dtime = 0;
@@ -255,23 +270,24 @@
                         dtime += 30;
                     }
                     grav = cyl(tradius, tdrho, tdepth, tposition, bloc, yloc, trend) +
-                        tides(time) + regional(bloc, yloc) + (gaussianRand() * std / Math.sqrt(nread))
+                        tides(time) + regional(bloc, yloc) + gaussianRand() * std / Math.sqrt(nread)
                         + slab(swidth, sdrho, stop, sbot, sposition, bloc, yloc, trend) +
                         vcyl(cxloc, cyloc, cradius, ctop, cdrho, bloc, yloc) + mtsize;
+
                     gravity[i] = grav;
                     location[i] = bloc;
                     obtime[i] = time;
                     i++;
 
-                    time += time_sta;
-                    btime += time_sta;
-                    rtime += time_sta;
-                    dtime += time_sta;
+                    time += time_base;
+                    btime += time_base;
+                    rtime += time_base;
+                    dtime += time_base;
                 }
             }
 
             grav = cyl(tradius, tdrho, tdepth, tposition, station, yloc, trend) + tides(time) +
-                regional(station, yloc) + (gaussianRand() * std / Math.sqrt(nread)) +
+                regional(station, yloc) + gaussianRand() * std / Math.sqrt(nread) +
                 slab(swidth, sdrho, stop, sbot, sposition, station, yloc, trend) +
                 vcyl(cxloc, cyloc, cradius, ctop, cdrho, station, yloc) + mtsize;
 
@@ -287,7 +303,7 @@
         }
 
         grav = cyl(tradius, tdrho, tdepth, tposition, bloc, yloc, trend) +
-            tides(time) + regional(bloc, yloc) + (gaussianRand() * std / Math.sqrt(nread)) +
+            tides(time) + regional(bloc, yloc) + gaussianRand() * std / Math.sqrt(nread) +
             slab(swidth, sdrho, stop, sbot, sposition, bloc, yloc, trend) +
             vcyl(cxloc, cyloc, cradius, ctop, cdrho, bloc, yloc) + mtsize;
 
@@ -295,9 +311,10 @@
         location[i] = bloc;
         obtime[i] = time;
 
-        return;
     }
-
+/*
+        *  finish up by returning to the base station
+        */
 
     function slab(swidth, sdrho, stop,
                   sbot, sposition, x, y, t) {
@@ -326,7 +343,7 @@
                 xs * Math.log(r2 * r3 / (r4 * r1)) +
                 swidth * Math.log(r4 / r3)) * 100000.0;
 
-        return (g);
+        return (g); //NOT SURE ABOUT THIS
     }
 
     function vcyl(xloc, yloc, radius,
@@ -419,7 +436,7 @@
          *  gravity stations to complete. If more are requested, change
          *  these time estimates accordingly
          */
-        time_sta = parseInt((nread * 5 / 3));
+        time_sta = parseInt(nread * 5 / 3);
         if (time_sta < 5) {
             time_sta = 5;
         }
